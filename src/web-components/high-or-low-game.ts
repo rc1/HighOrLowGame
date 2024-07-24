@@ -108,7 +108,6 @@ export class HighOrLowGame extends LitElement {
     private _handleAnswered = async (withResponse: QuestionResponse) => {
         if (!this.gameState) { return; }
 
-
         const isHigher = notesAscendInPitch(this.gameState.firstNote, this.gameState.secondNote);
 
         const isCorrect = (isHigher && withResponse === QuestionResponse.High) || (!isHigher && withResponse === QuestionResponse.Low);
@@ -144,6 +143,14 @@ export class HighOrLowGame extends LitElement {
 
         await wait(this.displayResultsForMs);
         this.gameState = makeNewRound(this.gameState!);
+
+        if (typeof umami !== "undefined") {
+            umami.track('answered');
+            umami.track(isCorrect ? "correct" : "wrong");
+            if (isHighScore) {
+                umami.track(`highscore`, {score: this.gameState.highestScore});
+            }
+        }
     }
 
     connectedCallback() {

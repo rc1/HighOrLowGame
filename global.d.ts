@@ -1,3 +1,3 @@
 declare const umami: {
-    track: (event: string) => void;
+    track: (event: string, payload?:any) => void;
 };

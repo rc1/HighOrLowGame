@@ -122,9 +122,6 @@ export class QuestionScreen extends LitElement {
 
     private _makeHandleAnswer = (withResponse: QuestionResponse) => () => {
         this.onAnswered?.(withResponse);
-        if (typeof umami !== "undefined") {
-            umami.track('answered');
-        }
     };
 
     private _handleAnswerHigh = this._makeHandleAnswer(QuestionResponse.High);
