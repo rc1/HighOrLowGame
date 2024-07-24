@@ -122,6 +122,9 @@ export class QuestionScreen extends LitElement {
 
     private _makeHandleAnswer = (withResponse: QuestionResponse) => () => {
         this.onAnswered?.(withResponse);
+        if (typeof umami !== "undefined") {
+            umami.track('answered');
+        }
     };
 
     private _handleAnswerHigh = this._makeHandleAnswer(QuestionResponse.High);
@@ -131,6 +134,9 @@ export class QuestionScreen extends LitElement {
     private _handlePlay = () => {
         if (this.onShouldPlay) {
             this.onShouldPlay();
+        }
+        if (typeof umami !== "undefined") {
+            umami.track('play-sound');
         }
     };
 
