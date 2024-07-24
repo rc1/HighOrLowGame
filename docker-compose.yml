@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  sketchbook-js:
+    image: ghcr.io/rc1/high-or-low-game:latest
+   ports:
+     - "8080:80"
+    restart: always
+    networks:
+      - web
+    labels:
+      - traefik.http.routers.high-or-low-game.rule=Host(`high-or-low-game.electricglen.com`)
+      - traefik.enable=true
+      - traefik.http.routers.high-or-low-game.tls=true
+      - traefik.http.routers.high-or-low-game.tls.certresolver=lets-encrypt
+      - traefik.port=80
+
+networks:
+  web:
+    external: true

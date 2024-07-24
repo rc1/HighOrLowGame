@@ -1,0 +1,57 @@
+.gitname: Deploy on server
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # - name: Free Disk Space - Ubuntu Runners
+      #   uses: endersonmenezes/free-disk-space@v2
+      #   with:
+      #     remove_android: true #64s~79s
+      #     remove_dotnet: true #1s-2s
+      #     remove_haskell: true #3s-5s
+      #     remove_tool_cache: true #4s-6s
+
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and Push Docker Image
+        run: |
+          docker buildx build --push --file Dockerfile --tag ghcr.io/rc1/high-or-low-game:latest .
+  deploy:
+    runs-on: self-hosted
+    needs: build
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Login to GitHub Container Registry
+        run: |
+          echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Pull and Run Docker Image with Docker Compose
+        run: |
+          cd /home/ross/datadrive/docker-high-or-low-game/repo
+          git pull origin main
+          docker compose pull
+          docker compose down
+          docker compose up -d
