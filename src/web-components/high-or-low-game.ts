@@ -125,7 +125,6 @@ export class HighOrLowGame extends LitElement {
 
         if (this.shouldSpeak) {
             try {
-                console.log("Will speak");
                 await say(withResponse === QuestionResponse.High ? "Higher" : "Lower");
                 await wait(666);
                 await say(isCorrect ? "Well Done!" : "Try Again!");
