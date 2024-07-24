@@ -2,11 +2,13 @@
 
 A quick, **dirty**, and ugly exportation of:
 
-1. Open WC typescript, LitElement, Web Components starter app project generator. Often a little verbose to explore all the key concepts and approaches of the generator template. Quick dip into Web Audio and Streams API. 
+1. Open WC's typescript, LitElement, Web Components starter app project generator. Often a little verbose as I was exploring the key concepts and approaches of the generator template. Quick dip into Web Audio and Streams API. 
 2. A game designed to help my kids articulate the concept of higher or lower pitch in sound. As a child, no one explained this to me, and I remember not being offered music lessons at a Scottish primary school 🥲 simply because I couldn't yet match the words to the concept.
 3. It is not that great a game... so I will leave as is. 
 4. It is made it for my mobile screen.
 5. It talks (one kid is to young to read).
+
+https://github.com/user-attachments/assets/29667356-1f50-4e09-a267-21b2ab664760
 
 ------
 
