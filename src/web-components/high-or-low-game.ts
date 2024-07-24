@@ -143,7 +143,6 @@ export class HighOrLowGame extends LitElement {
             }
         }
 
-        // Wait for 4 seconds then trigger a screen change
         await wait(this.displayResultsForMs);
         this.gameState = makeNewRound(this.gameState!);
     }
