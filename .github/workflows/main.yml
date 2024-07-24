@@ -1,4 +1,4 @@
-.gitname: Deploy on server
+name: Deploy on server
 
 on:
   push:
