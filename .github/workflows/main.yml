@@ -50,7 +50,7 @@ jobs:
 
       - name: Pull and Run Docker Image with Docker Compose
         run: |
-          cd /home/ross/datadrive/docker-high-or-low-game/repo
+          cd ${{ secrets.DEPLOY_PATH }}
           git pull origin main
           docker compose pull
           docker compose down
