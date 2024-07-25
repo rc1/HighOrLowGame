@@ -36,14 +36,14 @@ describe('HighOrLowGame', () => {
     });
 
     it('renders the question screen correctly', async () => {
-        element.gameState!.screen = Screen.Question;
+        element.gameState!.screen = "question";
         await element.requestUpdate();
         const questionScreen = element.shadowRoot!.querySelector('question-screen')!;
         expect(questionScreen).to.exist;
     });
 
     it('renders the answer result screen correctly', async () => {
-        element.gameState!.screen = Screen.AnswerResult;
+        element.gameState!.screen = "answer-result";
         await element.requestUpdate();
         const answerResultScreen = element.shadowRoot!.querySelector('answer-result-screen')!;
         expect(answerResultScreen).to.exist;
@@ -59,13 +59,13 @@ describe('HighOrLowGame', () => {
             highestScore: 0,
             firstNote: 'C4',
             secondNote: 'E4',
-            screen: Screen.Question,
+            screen: "question",
             isCorrect: false,
             isPlayingNotes: false,
             hasPlayedNotes: true,
         };
         await element.requestUpdate();
-        element['_handleAnswered'](QuestionResponse.High);
+        element['_handleAnswered']("high");
         await wait(displayAnswersFor + 10);
         expect(element.gameState!.screen).to.equal('question'); // Should reset to question
     });
@@ -76,7 +76,7 @@ describe('HighOrLowGame', () => {
             highestScore: 20,
             firstNote: 'D4',
             secondNote: 'G4',
-            screen: Screen.Question, 
+            screen: "question", 
             isPlayingNotes: false,
             hasPlayedNotes: false,
         }}></high-or-low-game>`);

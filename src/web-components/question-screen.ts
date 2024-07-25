@@ -124,9 +124,9 @@ export class QuestionScreen extends LitElement {
         this.onAnswered?.(withResponse);
     };
 
-    private _handleAnswerHigh = this._makeHandleAnswer(QuestionResponse.High);
+    private _handleAnswerHigh = this._makeHandleAnswer("high");
 
-    private _handleAnswerLow = this._makeHandleAnswer(QuestionResponse.Low);
+    private _handleAnswerLow = this._makeHandleAnswer("low");
 
     private _handlePlay = () => {
         if (this.onShouldPlay) {

@@ -10,15 +10,9 @@ import { sharedStyles } from "../styles.js";
 import wait from "../utils/wait.js";
 import { say } from "../utils/say.js";
 
-export enum Screen {
-    Question = "question",
-    AnswerResult = "answer-result"
-}
+export type Screen = "question" | "answer-result";
 
-export enum QuestionResponse {
-    High,
-    Low
-}
+export type QuestionResponse = "high" | "low";
 
 export type GameState = {
     currentScore: number;
@@ -38,7 +32,7 @@ export function createGameState(gameState?: Partial<GameState>): GameState {
         firstNote: "",
         secondNote: "",
         isCorrect: false,
-        screen: Screen.Question,
+        screen: "question",
         isPlayingNotes: false,
         hasPlayedNotes: false,
         ...gameState,
@@ -57,7 +51,7 @@ function withRandomNotes(gameState: GameState): GameState {
 export function makeNewRound(gameState: GameState): GameState {
     const nextGameState = withRandomNotes(gameState!);
     nextGameState.hasPlayedNotes = false;
-    nextGameState.screen = Screen.Question;
+    nextGameState.screen = "question";
     return nextGameState;
 }
 
@@ -110,7 +104,7 @@ export class HighOrLowGame extends LitElement {
 
         const isHigher = notesAscendInPitch(this.gameState.firstNote, this.gameState.secondNote);
 
-        const isCorrect = (isHigher && withResponse === QuestionResponse.High) || (!isHigher && withResponse === QuestionResponse.Low);
+        const isCorrect = (isHigher && withResponse === "high") || (!isHigher && withResponse === "low");
 
         const isHighScore = isCorrect && this.gameState.currentScore + 1 > this.gameState.highestScore;
 
@@ -119,12 +113,12 @@ export class HighOrLowGame extends LitElement {
             currentScore: isCorrect ? this.gameState.currentScore + 1 : 0,
             highestScore: isCorrect ? Math.max(this.gameState.currentScore + 1, this.gameState.highestScore) : this.gameState.highestScore,
             isCorrect,
-            screen: Screen.AnswerResult
+            screen: "answer-result"
         };
 
         if (this.shouldSpeak) {
             try {
-                await say(withResponse === QuestionResponse.High ? "Higher" : "Lower");
+                await say(withResponse === "high" ? "Higher" : "Lower");
                 await wait(666);
                 await say(isCorrect ? "Well Done!" : "Try Again!");
                 if (isHighScore) {
@@ -169,7 +163,7 @@ export class HighOrLowGame extends LitElement {
         if (!this.gameState) { return ""; }
 
         switch (this.gameState.screen) {
-            case Screen.Question:
+            case "question":
                 return html`
                     <question-screen class="screen"
                         .gameState=${this.gameState}
@@ -178,7 +172,7 @@ export class HighOrLowGame extends LitElement {
                     ></question-screen>
                     <score-board .gameState=${this.gameState}></score-board>
                 `;
-            case Screen.AnswerResult:
+            case "answer-result":
                 return html`
                     <answer-result-screen class="screen"
                         .gameState=${this.gameState}
